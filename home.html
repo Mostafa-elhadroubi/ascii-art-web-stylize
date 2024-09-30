@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <h1>ASCII-ART-WEB</h1>
+
+    <form action="/process" method="post">
+        <textarea name="data" id="textarea" cols="20" rows="10" maxlength="100" required></textarea>
+        <div class="checkbox">
+            <label>Choices:</label>
+            <div class="input"><input type="radio" name="banner" id="" value="standard" checked>standard</div>
+            <div class="input"><input type="radio" name="banner" id="" value="shadow">shadow</div>
+            <div class="input"><input type="radio" name="banner" id="" value="thinkertoy">thinkertoy</div>
+        </div>
+        <div class="btn">
+            <button type="submit" class="btns">Submit</button>
+        </div>
+    </form>
+
+    <h2 class="res">Result:</h2>
+    <div class="result">
+        <pre>{{.Res}}</pre>
+    </div>
+
+    <script>
+        let form = document.querySelector("form")
+        let result = document.querySelector(".result")
+        // const textarea = document.querySelector('#textarea');
+        let btn = document.querySelector('.btn')
+        // result.style.display = "none"
+        // form.addEventListener('submit', (ev) => {
+            
+        //     ev.preventDefault()
+        //     result.style.display = "block"
+        // })
+    </script>
+</body>
+</html>
