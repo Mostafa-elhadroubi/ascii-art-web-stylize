@@ -51,12 +51,7 @@ func TraitmentData(bnr string,  arg string) string {
 	}
 	
 	arrData := strings.Split(string(text), "\n")
-	fmt.Printf("%#v\n", arg)
 	arg = strings.ReplaceAll(arg, "\\n", "\n")
-	fmt.Printf("%#v\n", arg)
-	if arg == "\n"  {
-		return ""
-	}
 	res := ""
 	count := 0
 	words := strings.Split(arg, "\n")

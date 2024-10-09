@@ -58,7 +58,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("home.html")
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w, err.Error()/*convert the error into string*/, http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	if err := t.Execute(w, nil); err != nil {
