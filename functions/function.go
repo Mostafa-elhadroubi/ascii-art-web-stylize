@@ -26,6 +26,12 @@ func CheckFormatCommand() bool {
 	return true
 }
 
+func CheckBanner(banner string) bool {
+	if  banner == "standard" || banner == "shadow" || banner == "thinkertoy" {
+		return true
+	}
+	return false
+}
 func ReadArg() (string, string){
 	banner := os.Args[1]
 	t := os.Args[2]

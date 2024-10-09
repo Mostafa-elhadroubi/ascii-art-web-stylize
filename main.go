@@ -19,48 +19,62 @@ type Test struct {
 	Name string
 	Age int
 }
-// func indexHandler(w http.ResponseWriter, r *http.Request) {
-// 	io.WriteString(w, "Mostafa")
-// }
 
 func processHandler(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("home.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-	var  d Data
-	d.Str = r.FormValue("data")
-	d.Banner = r.FormValue("banner")
-	log.Println("Received Data:", d.Str)
-	d.Str = strings.ReplaceAll(d.Str, "\r\n", "\\n")
-	d.Str = strings.ReplaceAll(d.Str, "\n", "\\n")
-	d.Res = function.TraitmentData(d.Banner, d.Str)
-	d.A = template.HTML(strings.ReplaceAll(d.Res, "\n", "<br>"))
-	t.Execute(w, d)
-	// if err := t.Execute(w, d); err != nil {
-    //     http.Error(w, err.Error(), http.StatusInternalServerError)
-    // }
-	// io.WriteString(w, res)
+	if  r.Method != http.MethodPost {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	var  data Data
+	data.Str = r.FormValue("data")
+	data.Banner = r.FormValue("banner")
+	if !function.CheckBanner(data.Banner) {
+		http.Error(w, "Invalid banner", http.StatusBadRequest)
+		return
+	}
+	log.Println("Received Data:", data.Str)
+	data.Str = strings.ReplaceAll(data.Str, "\r\n", "\\n")
+	data.Str = strings.ReplaceAll(data.Str, "\n", "\\n")
+	data.Res = function.TraitmentData(data.Banner, data.Str)
+	data.A = template.HTML(strings.ReplaceAll(data.Res, "\n", "<br>"))
+	if err := t.Execute(w, data); err != nil {
+		http.Error(w,  err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 
 
-func ageHandler(w http.ResponseWriter, r *http.Request) {
-	// a := Test{Name: "Mostafa", Age: 27}
+func homePage(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.Error(w, "Not found", http.StatusInternalServerError)
+		return
+	}
 	t, err := template.ParseFiles("home.html")
 	if err != nil {
 		fmt.Println(err)
 		http.Error(w, err.Error()/*convert the error into string*/, http.StatusInternalServerError)
+		return
 	}
-	t.Execute(w, "")
+	if err := t.Execute(w, nil); err != nil {
+		http.Error(w, err.Error(),  http.StatusInternalServerError)
+		return
+	}
 }
 
 
 func main() {
-	// http.HandleFunc("/", indexHandler)
 	fs := http.FileServer(http.Dir("css"))
 	http.Handle("/css/", http.StripPrefix("/css", fs))
-	http.HandleFunc("/home", ageHandler)
+	http.HandleFunc("/", homePage)
 	http.HandleFunc("/process", processHandler)
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server is running at http://localhost:8080")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		fmt.Println("Error starting server:", err)
+	}
 }

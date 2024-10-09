@@ -72,9 +72,8 @@ h2{
 pre{
     color: rgb(0, 0, 0);
 }
-@media  (max-width:  768px) {
+@media  (max-width:  1068px) {
     h1 {
-        /* color: red; */
         font-size: 26px;
         margin-top: 140px;
         margin-bottom: 80px;
@@ -112,9 +111,9 @@ pre{
         font-size: 16px;
     }
 }
-@media  (max-width:  512px) {
+@media  (max-width:  712px) {
     h1 {
-        color: red;
+        /* color: red; */
         font-size: 24px;
         margin-top: 60px;
         margin-bottom: 40px;
@@ -150,9 +149,9 @@ pre{
     }
     .result{
         background: rgb(224, 222, 222);
-        padding: 14px 20px;
+        padding: 10px 10px;
     }
     pre{
-        font-size: 14px;
+        font-size: 10px;
     }
 }
