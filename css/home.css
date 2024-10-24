@@ -68,6 +68,13 @@ h2{
     border-radius: 10px;
     padding: 10px 20px;
     margin: auto;
+    position: relative;
+}
+.result a {
+    position: absolute;
+    right: 10px;
+    font-size: 28px;
+    /* top: -20px; */
 }
 pre{
     color: rgb(0, 0, 0);
